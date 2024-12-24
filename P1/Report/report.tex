@@ -123,15 +123,32 @@ $ z = a $) é mantida em potencial contante e uniforme $ V_0 $.
 
 Com isso em mente, faça o que se pede:
 \begin{enumerate}
-    \item Determine uma equação para o potencial no interior do cubo de forma analítica, utilizando o Método da Separação de Variáveis.
+    \item Determine uma equação para o potencial no interior do cubo de forma analítica, utilizando o Método da Separação de Variáveis
+    (discutido na Seção \ref{sec:analysis}).
     \item Esboce o potencial, na forma de um ``mapa de calor”, para a região central do cubo (fixando $ x = \frac{a}{2} $
-    ou $ y = \frac{a}{2} $ e variando as outras duas variáveis), utilizando resultados obtidos numericamente.
+    ou $ y = \frac{a}{2} $ e variando as outras duas variáveis), utilizando resultados obtidos numericamente (discutido na Seção
+    \ref{sec:numerical}).
 \end{enumerate}
 
 \section{Resolução Analítica do Problema}
+\label{sec:analysis}
 
-Para modelar o comportamento de $ V(x, y, z) $ analiticamente, partir-se-á da Equação de Laplace com as condições de contorno fornecidas
-no problema:
+Partindo de primeiros princípios, utilizando dos postulados da Eletrostática:
+$$ \overrightarrow{\nabla}\cdot \overrightarrow{E} = \frac{\rho_V}{\varepsilon_0} $$
+$$ \overrightarrow{\nabla}\times \overrightarrow{E} = \overrightarrow{0} $$
+
+Com a segunda expressão, deduz-se que o campo elétrico é conservativo, ou seja,
+$$ \Rightarrow \exists V \mid \overrightarrow{E} = -\overrightarrow{\nabla} V $$
+
+Logo, unindo essa equação e a primeira equação dessa seção:
+$$ \Rightarrow \overrightarrow{\nabla}\cdot(-\overrightarrow{\nabla} V) = \frac{\rho_V}{\varepsilon_0} $$
+$$ \Rightarrow \nabla^2V = -\frac{\rho_V}{\varepsilon_0} \text{ (Equação de Poisson)} $$
+
+Para o caso do problema onde não há cargas onde procura-se determinar o potencial elétrico:
+$$ \Rightarrow \nabla^2V = 0 \text{ (Equação de Laplace)} $$
+
+Com isso, para modelar o comportamento de $ V(x, y, z) $ analiticamente, partir-se-á da Equação
+de Laplace com as Condições de Contorno fornecidas no problema:
 
 \begin{equation}
   \label{eq:laplace}
@@ -187,7 +204,73 @@ a constante dos dois lados das equações obtém-se o seguinte sistema de Equaç
     \end{cases}
   \end{equation}
 
+Dadas essas EDOs, para alguma das variáveis, pode-se obter as seguintes soluções gerais:
+\begin{equation}
+    \label{eq:laplace_solutions_degenerates}
+    \centering
+    S(s) = A_0s + B_0,\, K_s^2 = 0
+\end{equation}
+\begin{equation}
+    \label{eq:laplace_solutions_real}
+    \centering
+    S(s) = A_1\sin(ks) + B_1\cos(ks),\, K_s^2 > 0,\, K_s = K \text{ real}
+\end{equation}
+\begin{equation}
+    \label{eq:laplace_solutions_imaginary}
+    \centering
+    S(s) = A_2\sinh(ks) + B_2\cosh(ks),\, K_s^2 < 0,\, K_s = K \text{ imaginário}
+\end{equation}
+
+Todas essas para $ S(s) = X(x), Y(y), Z(z) $. Para cada variável $ x $, $ y $ e $ z $, a
+forma da solução geral depende das Condições de Fronteira.
+
+Alguns PVCs em Eletrostática apresentam dependência em apenas algumas variáveis. No entanto,
+mesmo que este tenha alguma simetria em relação à $ x $ e $ y $ (fixando um certo $ x $ ou $ y $,
+e fazendo $ z $ variar em função da variável restante deve resultar no mesmo comportamento de $ V(y,z) $
+ou $ V(x,z) $), de forma geral, precisar-se-á resolver o problema para todas as variáveis separadamente.
+
+\subsection{Determinando o Comportamento das Soluções}
+
+Para descobrir qual é o comportamento de cada variável desse problema, basta analisar as Condições de Fronteira
+para duas das variáveis dadas em \ref{eq:laplace} e, pela equação \ref{eq:laplace_edos}, obter e confirmar o
+comportamento da variável restante.
+Para a variável $ z $:
+$$ z: V(x, y, 0) = 0,\, V(x, y, a) = V_0 $$
+
+Ou seja, observa-se um comportamento de decaímento. Quanto mais afasta-se verticalmente da placa com potencial $ V_0 $,
+menor será o potencial. Isso indica, dentre as soluções gerais para as equações, que a solução nessa variável corresponde
+a um decaímento exponencial descrito pela equação \ref{eq:laplace_solutions_imaginary}. Ou seja, $ K_z < 0 $. Por conta
+disso, sabe-se que precisa haver $ K_x > 0 \lor K_y > 0 $ para que o resto da equação \ref{eq:laplace_edos} seja satisfeito.
+Nesse caso, como é um cubo com todas as distâncias iguais e com todos os potenciais iguais, exceto na tampa, percebe-se que tanto
+a variável $ x $, quanto a variável $ y $ devem apresentar o mesmo comportamento. Isso também pode ser observado diretamente nas
+Condições de Fronteira dessas variáveis:
+$$ x: V(0, y, z) = 0,\, V(a, y, z) = 0 $$
+$$ y: V(x, 0, z) = 0,\, V(x, a, z) = 0 $$
+
+Logo, pelas constatações acima, sabe-se que $ K_x > 0 $ e que $ K_y > 0 $. Portanto, obtém-se as seguintes equações gerais para as
+variáveis do problema:
+
+\begin{equation}
+    \label{eq:problem_general_solution_x}
+    \centering
+    X(x) = A\sin(kx) + B\cos(kx),\, K_x^2 > 0,\, K_x = K \text{ real}
+\end{equation}
+\begin{equation}
+    \label{eq:problem_general_solution_y}
+    \centering
+    Y(y) = C\sin(ky) + D\cos(ky),\, K_y^2 > 0,\, K_y = K \text{ real}
+\end{equation}
+\begin{equation}
+    \label{eq:problem_general_solution_z}
+    \centering
+    Z(z) = Ee^{kz} + Fe^{-kz},\, K_z^2 < 0,\, K_z = K \text{ imaginário}
+\end{equation}
+
+Será confirmado se essas constatações estão efetivamente corretas através da
+análise numérica na seção \ref{sec:numerical}.
+
 \section{Resolução Numérica do Problema}
+\label{sec:numerical}
 \subsection{Comportamento Numérico da Solução}
 \subsection{Simulação em \textit{Software}}
 
