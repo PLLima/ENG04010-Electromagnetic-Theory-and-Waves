@@ -13,6 +13,7 @@
 \usepackage{indentfirst}
 \usepackage{setspace}
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{relsize}
 \usepackage{array}
 
@@ -256,12 +257,12 @@ variáveis do problema:
 \begin{equation}
     \label{eq:problem_general_solution_x}
     \centering
-    X(x) = A\sin(nx) + B\cos(nx),\, K_x^2 > 0,\, K_x = K \text{ real}
+    X(x) = A\sin(kx) + B\cos(kx),\, K_x^2 > 0,\, K_x = K \text{ real}
 \end{equation}
 \begin{equation}
     \label{eq:problem_general_solution_y}
     \centering
-    Y(y) = C\sin(my) + D\cos(my),\, K_y^2 > 0,\, K_y = K \text{ real}
+    Y(y) = C\sin(ky) + D\cos(ky),\, K_y^2 > 0,\, K_y = K \text{ real}
 \end{equation}
 \begin{equation}
     \label{eq:problem_general_solution_z}
@@ -277,7 +278,7 @@ Portanto, agrupando \ref{eq:problem_general_solution_x}, \ref{eq:problem_general
 \begin{equation}
     \label{eq:problem_general_solution}
     \centering
-    V(x, y, z) = [A\sin(nx) + B\cos(nx)][C\sin(my) + D\cos(my)][Ee^{kz} + Fe^{-kz}]
+    V(x, y, z) = [A\sin(kx) + B\cos(kx)][C\sin(ky) + D\cos(ky)][Ee^{kz} + Fe^{-kz}]
 \end{equation}
 
 \subsection{Cálculo dos Coeficientes das Soluções}
@@ -288,14 +289,14 @@ Ou seja, com as condições que envolvem zerar as soluções gerais:
 \begin{itemize}
   \item Usando $ V(0, y, z) = 0 $ na equação \ref{eq:problem_general_solution}:
 \end{itemize}
-$$ \Rightarrow V(0, y, z) = [A \cdot 0 + B \cdot 1][C\sin(my) + D\cos(my)][Ee^{kz} + Fe^{-kz}] = 0 $$
-$$ \Rightarrow B[C\sin(my) + D\cos(my)][Ee^{kz} + Fe^{-kz}] = 0 $$
+$$ \Rightarrow V(0, y, z) = [A \cdot 0 + B \cdot 1][C\sin(ky) + D\cos(ky)][Ee^{kz} + Fe^{-kz}] = 0 $$
+$$ \Rightarrow B[C\sin(ky) + D\cos(ky)][Ee^{kz} + Fe^{-kz}] = 0 $$
 
 Para uma multiplicação ser nula, precisa-se algum dos termos multiplicados seja nulo. Como sabe-se que
 exponenciais nunca são nulas, para essa parcela ser nula, precisar-se-ia que tanto $ E = 0 $, quanto $ F = 0 $.
 No entanto, isso resulta na solução trivial para a variável $ z $, algo já constatado como falso. Logo, alguma
 das outras parcelas ou ambas deve ser nula:
-$$ \Rightarrow B[C\sin(my) + D\cos(my)] = 0 $$
+$$ \Rightarrow B[C\sin(ky) + D\cos(ky)] = 0 $$
 
 O mesmo raciocínio se aplica para as constantes $ C $ e $ D $, visto que as funções seno e cosseno nunca são zero
 ao mesmo tempo, exigindo que, para essa parcela ser nula, precisa-se da solução trivial para $ y $, algo analisado
@@ -305,11 +306,11 @@ $$ \Rightarrow B = 0 $$
 \begin{itemize}
   \item Usando $ V(x, 0, z) = 0 $ na equação \ref{eq:problem_general_solution} sabendo que $ B = 0 $:
 \end{itemize}
-$$ \Rightarrow V(x, 0, z) = A\sin(nx)[C\cdot 0 + D\cdot 1][Ee^{kz} + Fe^{-kz}] = 0 $$
-$$ \Rightarrow D\cdot A\sin(nx)[Ee^{kz} + Fe^{-kz}] = 0 $$
+$$ \Rightarrow V(x, 0, z) = A\sin(kx)[C\cdot 0 + D\cdot 1][Ee^{kz} + Fe^{-kz}] = 0 $$
+$$ \Rightarrow D\cdot A\sin(kx)[Ee^{kz} + Fe^{-kz}] = 0 $$
 
 Como já argumentado acima, $ E \neq 0 $ e $ F \neq 0 $:
-$$ \Rightarrow D\cdot A\sin(nx) = 0 $$
+$$ \Rightarrow D\cdot A\sin(kx) = 0 $$
 
 Pela mesma lógica da condição anterior, para não haver solução trivial na variável $ x $, precisa-se que $ A \neq 0 $:
 $$ \Rightarrow D = 0 $$
@@ -317,31 +318,62 @@ $$ \Rightarrow D = 0 $$
 \begin{itemize}
   \item Usando $ V(x, y, 0) = 0 $ na equação \ref{eq:problem_general_solution} sabendo que $ B = 0 $ e $ D = 0 $:
 \end{itemize}
-$$ \Rightarrow V(x, y, 0) = A\sin(nx)D\sin(my)[E\cdot 1 + F\cdot 1] = 0 $$
-$$ \Rightarrow A\sin(nx)D\sin(my)[E + F] = 0 $$
+$$ \Rightarrow V(x, y, 0) = A\sin(kx)D\sin(ky)[E\cdot 1 + F\cdot 1] = 0 $$
+$$ \Rightarrow A\sin(kx)D\sin(ky)[E + F] = 0 $$
 
 Como já discutido anteriormente, para não haver solução trivial nas variáveis $ x $ e $ y $, precisa-se que $ A \neq 0 $ e $ C \neq 0 $:
 $$ \Rightarrow E + F = 0 $$
 $$ \Rightarrow E = -F $$
 
-Assim, para facilitar, chamar-se-á $ K' := E = -F $.
-
-Portanto, a solução do problema agora é:
-
+Assim, para facilitar, chamar-se-á $ K' := E = -F $ e ainda $ C' := A\cdot C $. Desta forma, separando as exponenciais da equação e renomeando
+as variáveis $ A' = C'\cdot K' $:
 \begin{equation}
     \label{eq:problem_part_solution}
     \centering
-    V(x, y, z) = A\sin(nx)D\sin(my)(K'e^{kz} - K'e^{-kz})
+    V(x, y, z) = A'(e^{kz}\sin(kx)\sin(ky) - e^{-kz}\sin(kx)\sin(ky))
 \end{equation}
 
-Agora, será utilizada a condição de fronteira $ V(x, y, a) = V_0 $ em \ref{eq:problem_part_solution}.
+\begin{itemize}
+  \item Usando $ V(a, y, z) = 0 $ na equação \ref{eq:problem_part_solution}:
+\end{itemize}
+$$ \Rightarrow V(a, y, z) = A'(e^{kz}\sin(ka)\sin(ky) - e^{-kz}\sin(ka)\sin(ky)) = 0 $$
+$$ \Rightarrow V(a, y, z) = A'(e^{kz} - e^{-kz})\sin(ka)\sin(ky) = 0 $$
+
+Como a contante $ A' $ não pode ser nula e as funções seno e exponencial são não nulas para diversos valores de $ y $ e $ z $, resta que:
+$$ \Rightarrow \sin(ka) = 0 $$
+
+A função seno é periódica e apresenta valor zero quando o seu argumento vale $ n\pi $, onde $ n \in \mathbb{Z} $:
+$$ \Rightarrow ka = n\pi $$
+$$ k = \frac{n\pi}{a},\, n \in \mathbb{Z} $$
+
+Esse fato é reforçado pela aplicação de outra Condição de Fronteira:
+
+\begin{itemize}
+  \item Usando $ V(x, a, z) = 0 $ na equação \ref{eq:problem_part_solution}:
+\end{itemize}
+$$ \Rightarrow V(x, a, z) = A'(e^{kz}\sin(kx)\sin(ka) - e^{-kz}\sin(kx)\sin(ka)) = 0 $$
+$$ \Rightarrow V(x, a, z) = A'(e^{kz} - e^{-kz})\sin(kx)\sin(ka) = 0 $$
+
+Pelos argumentos anteriores, resta que:
+$$ \Rightarrow \sin(ka) = 0 $$
+
+Ou seja, obteve-se um resultado para $ k $ que satisfaz todas as Condições de Fronteira:
+
+\begin{equation}
+    \label{eq:k_values}
+    \centering
+    k = \frac{n\pi}{a},\, n \in \mathbb{Z}
+\end{equation}
+
+Por fim, será utilizada a condição de fronteira $ V(x, y, a) = V_0 $ em \ref{eq:problem_part_solution}.
 No entanto, essa condição não é trivial de ser aplicada, visto que gera-se
 a seguinte sequência de afirmações:
-$$ \Rightarrow V(x, y, a) = A\sin(nx)D\sin(my)(K'e^{ka} - K'e^{-ka}) = V_0 $$
+$$ \Rightarrow V(x, y, z) = A'(e^{ka}\sin(kx)\sin(ky) - e^{-ka}\sin(kx)\sin(ky)) = V_0 $$
+$$ \Rightarrow A'(e^{ka} - e^{-ka})\sin(kx)\sin(ky) = V_0 $$
 
-Coletando as constantes e definindo $ C_{nm} = A\cdot B(K'e^{ka} - K'e^{-ka}) $:
+Coletando as constantes e definindo $ C_{k} := A'(e^{ka} - e^{-ka}) $, obtém-se que
 
-$$ \Rightarrow C_{nm}\sin(nx)\sin(my) = V_0 $$
+$$ \Rightarrow C_{k}\sin(kx)\sin(ky) = V_0 $$
 
 A multiplicação de duas funções periódicas dessa forma nunca será constante. Portanto, será
 preciso extrapolar o problema e considerar que a função potencial é uma função períodica ímpar tanto em
@@ -350,7 +382,7 @@ $ x $, quanto em $ y $, formando uma espécie tabuleiro de xadrez com largura de
 \begin{figure}[h!]
     \centering
     \tdplotsetmaincoords{0}{130}
-    \begin{tikzpicture}[tdplot_main_coords]
+    \begin{tikzpicture}[tdplot_main_coords, scale=0.65]
         % Define the cube's dimensions
         \def\a{2} % length of the cube's sides
         \def\d{5} % length of the axis
@@ -371,12 +403,15 @@ $ x $, quanto em $ y $, formando uma espécie tabuleiro de xadrez com largura de
         \node at (1.5*\a,1.5*\a,\a) {$ +V_0 $};
         \node at (0.5*\a,1.5*\a,-\a) {$ -V_0 $};
 
-        \node at (\a,-0.15,-\a) {$ a $};
-        \node at (-0.15,\a,-\a) {$ a $};
-        \node at (-0.15,0.15,\a) {$ a $};
+        \node at (\a,-0.25,0) {$ a $};
+        \node at (-0.25,\a,0) {$ a $};
+        \node at (-0.25,0.25,0) {$ a $};
     \end{tikzpicture}
     \caption{\label{plot:potencial_ext} Extrapolação do Potencial além de $ x = y = z = a $.}
 \end{figure}
+
+Com essa suposição, já que o potencial fora do cubo não é importante para o problema, pode-se
+aplicar a teoria das Séries de Fourrier para achar uma solução que satisfaça às condições acima.
 
 \section{Resolução Numérica do Problema}
 \label{sec:numerical}
