@@ -129,6 +129,64 @@ Com isso em mente, faça o que se pede:
 \end{enumerate}
 
 \section{Resolução Analítica do Problema}
+
+Para modelar o comportamento de $ V(x, y, z) $ analiticamente, partir-se-á da Equação de Laplace com as condições de contorno fornecidas
+no problema:
+
+\begin{equation}
+  \label{eq:laplace}
+  \centering
+  \begin{cases}
+    \nabla^2 V = 0 \\
+    x: V(0, y, z) = 0,\, V(a, y, z) = 0 \\
+    y: V(x, 0, z) = 0,\, V(x, a, z) = 0 \\
+    z: V(x, y, 0) = 0,\, V(x, y, a) = V_0
+  \end{cases}
+\end{equation}
+
+A partir dela, tem-se, em coordenadas cartesianas, que:
+$$ \frac{\partial^2 V}{\partial x^2} + \frac{\partial^2 V}{\partial y^2} + \frac{\partial^2 V}{\partial z^2} = 0 $$
+
+E, pelo Método da Separação de Variáveis, assume-se que, para coordenadas cartesianas:
+$$ V(x, y, z) = X(x)Y(y)Z(z) $$
+
+Portanto, a partir daí, tem-se que:
+$$ \Rightarrow \frac{\partial^2 V}{\partial x^2} = Y(y)Z(z)\frac{\partial^2}{\partial x^2}X(x) $$
+$$ \Rightarrow \frac{\partial^2 V}{\partial y^2} = X(x)Z(z)\frac{\partial^2}{\partial y^2}Y(y) $$
+$$ \Rightarrow \frac{\partial^2 V}{\partial z^2} = X(x)Y(y)\frac{\partial^2}{\partial z^2}Z(z) $$
+$$ \Rightarrow \nabla^2 V = Y(y)Z(z)\frac{\partial^2}{\partial x^2}X(x) + X(x)Z(z)\frac{\partial^2}{\partial y^2}Y(y) + X(x)Y(y)\frac{\partial^2}{\partial z^2}Z(z) = 0 $$
+
+Agora, assumindo que $ X(x) \neq 0 $, $ Y(y) \neq 0 $ e $ Z(z) \neq 0 $, na região de interesse, pode-se dividir a equação acima por $ X(x)Y(y)Z(z) $:
+$$ \Rightarrow \frac{1}{X(x)}\frac{\partial^2 X(x)}{\partial x^2} + \frac{1}{Y(y)}\frac{\partial^2 Y(y)}{\partial y^2} + \frac{1}{Z(z)}\frac{\partial^2 Z(z)}{\partial z^2} = 0 $$
+
+Porém, a única forma dessa equação resultar em zero para todos os valores de $ X(x) $, $ Y(y) $ e $ Z(z) $ se dá quando cada uma das parcelas somadas na equação é uma constante.
+Em outras palavras:
+\begin{equation}
+  \label{eq:laplace_constants}
+  \centering
+  \begin{cases}
+    \frac{1}{X(x)}\frac{\partial^2 X(x)}{\partial x^2} = -K_x^2 \\
+    \frac{1}{Y(y)}\frac{\partial^2 Y(y)}{\partial y^2} = -K_y^2 \\
+    \frac{1}{Z(z)}\frac{\partial^2 Z(z)}{\partial z^2} = -K_z^2
+  \end{cases}
+  \Rightarrow K_x^2 + K_y^2 + K_z^2 = 0
+\end{equation}
+
+Essa escolha de constantes foi feita para facilitar a dedução do resto do problema, visto que as constantes podem ser complexas.
+
+Multiplicando cada uma das equações de \ref{eq:laplace_constants} pelas suas respectivas funções dependentes apenas de uma coordenada e somando
+a constante dos dois lados das equações obtém-se o seguinte sistema de Equações Diferenciais Ordinárias (EDOs):
+\begin{equation}
+    \label{eq:laplace_edos}
+    \centering
+    \begin{cases}
+      \frac{d^2 X(x)}{dx^2} + X(x)K_x^2 = 0 \\
+      \frac{d^2 Y(y)}{dy^2} + Y(y)K_y^2 = 0 \\
+      \frac{d^2 Z(z)}{dz^2} + Z(z)K_z^2 = 0 \\
+      K_x^2 + K_y^2 + K_z^2 = 0
+    \end{cases}
+  \end{equation}
+
 \section{Resolução Numérica do Problema}
 \subsection{Comportamento Numérico da Solução}
 \subsection{Simulação em \textit{Software}}
