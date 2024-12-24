@@ -238,27 +238,30 @@ Para a variável $ z $:
 $$ z: V(x, y, 0) = 0,\, V(x, y, a) = V_0 $$
 
 Ou seja, observa-se um comportamento de decaímento. Quanto mais afasta-se verticalmente da placa com potencial $ V_0 $,
-menor será o potencial. Isso indica, dentre as soluções gerais para as equações, que a solução nessa variável corresponde
-a um decaímento exponencial descrito pela equação \ref{eq:laplace_solutions_imaginary}. Ou seja, $ K_z < 0 $. Por conta
-disso, sabe-se que precisa haver $ K_x > 0 \lor K_y > 0 $ para que o resto da equação \ref{eq:laplace_edos} seja satisfeito.
+menor será o potencial. No entanto, esse comportamento não pode ser linear, pois esse é o caso quando há apenas duas placas
+paralelas, uma com potencial não nulo e a outra com potencial nulo. Esse não é o caso para este problema porque, ao decrementar
+a variável $ z $, ocorre um certo amortercimento devido ao potencial nulo das placas laterais, gerando comportamento não linear
+em $ z $. Isso indica, dentre as soluções gerais para as equações, que a solução nessa variável corresponde
+a um decaímento exponencial descrito pela equação \ref{eq:laplace_solutions_imaginary}. Ou seja, $ K_z^2 < 0 $. Por conta
+disso, sabe-se que precisa haver $ K_x^2 > 0 $ ou (inclusivo) $ K_y^2 > 0 $ para que o resto da equação \ref{eq:laplace_edos} seja satisfeito.
 Nesse caso, como é um cubo com todas as distâncias iguais e com todos os potenciais iguais, exceto na tampa, percebe-se que tanto
 a variável $ x $, quanto a variável $ y $ devem apresentar o mesmo comportamento. Isso também pode ser observado diretamente nas
 Condições de Fronteira dessas variáveis:
 $$ x: V(0, y, z) = 0,\, V(a, y, z) = 0 $$
 $$ y: V(x, 0, z) = 0,\, V(x, a, z) = 0 $$
 
-Logo, pelas constatações acima, sabe-se que $ K_x > 0 $ e que $ K_y > 0 $. Portanto, obtém-se as seguintes equações gerais para as
+Logo, pelas constatações acima, sabe-se que $ K_x^2 > 0 $ e que $ K_y^2 > 0 $. Portanto, obtém-se as seguintes equações gerais para as
 variáveis do problema:
 
 \begin{equation}
     \label{eq:problem_general_solution_x}
     \centering
-    X(x) = A\sin(kx) + B\cos(kx),\, K_x^2 > 0,\, K_x = K \text{ real}
+    X(x) = A\sin(nx) + B\cos(nx),\, K_x^2 > 0,\, K_x = K \text{ real}
 \end{equation}
 \begin{equation}
     \label{eq:problem_general_solution_y}
     \centering
-    Y(y) = C\sin(ky) + D\cos(ky),\, K_y^2 > 0,\, K_y = K \text{ real}
+    Y(y) = C\sin(my) + D\cos(my),\, K_y^2 > 0,\, K_y = K \text{ real}
 \end{equation}
 \begin{equation}
     \label{eq:problem_general_solution_z}
@@ -268,6 +271,112 @@ variáveis do problema:
 
 Será confirmado se essas constatações estão efetivamente corretas através da
 análise numérica na seção \ref{sec:numerical}.
+
+Portanto, agrupando \ref{eq:problem_general_solution_x}, \ref{eq:problem_general_solution_y} e
+\ref{eq:problem_general_solution_z}, obtém-se a seguinte solução geral para o problema original:
+\begin{equation}
+    \label{eq:problem_general_solution}
+    \centering
+    V(x, y, z) = [A\sin(nx) + B\cos(nx)][C\sin(my) + D\cos(my)][Ee^{kz} + Fe^{-kz}]
+\end{equation}
+
+\subsection{Cálculo dos Coeficientes das Soluções}
+
+Com as Condições de Fronteira, serão primeiramente calculados os coeficientes mais diretos.
+Ou seja, com as condições que envolvem zerar as soluções gerais:
+
+\begin{itemize}
+  \item Usando $ V(0, y, z) = 0 $ na equação \ref{eq:problem_general_solution}:
+\end{itemize}
+$$ \Rightarrow V(0, y, z) = [A \cdot 0 + B \cdot 1][C\sin(my) + D\cos(my)][Ee^{kz} + Fe^{-kz}] = 0 $$
+$$ \Rightarrow B[C\sin(my) + D\cos(my)][Ee^{kz} + Fe^{-kz}] = 0 $$
+
+Para uma multiplicação ser nula, precisa-se algum dos termos multiplicados seja nulo. Como sabe-se que
+exponenciais nunca são nulas, para essa parcela ser nula, precisar-se-ia que tanto $ E = 0 $, quanto $ F = 0 $.
+No entanto, isso resulta na solução trivial para a variável $ z $, algo já constatado como falso. Logo, alguma
+das outras parcelas ou ambas deve ser nula:
+$$ \Rightarrow B[C\sin(my) + D\cos(my)] = 0 $$
+
+O mesmo raciocínio se aplica para as constantes $ C $ e $ D $, visto que as funções seno e cosseno nunca são zero
+ao mesmo tempo, exigindo que, para essa parcela ser nula, precisa-se da solução trivial para $ y $, algo analisado
+anteriormente como não verdadeiro. Portanto, só resta a conclusão que:
+$$ \Rightarrow B = 0 $$
+
+\begin{itemize}
+  \item Usando $ V(x, 0, z) = 0 $ na equação \ref{eq:problem_general_solution} sabendo que $ B = 0 $:
+\end{itemize}
+$$ \Rightarrow V(x, 0, z) = A\sin(nx)[C\cdot 0 + D\cdot 1][Ee^{kz} + Fe^{-kz}] = 0 $$
+$$ \Rightarrow D\cdot A\sin(nx)[Ee^{kz} + Fe^{-kz}] = 0 $$
+
+Como já argumentado acima, $ E \neq 0 $ e $ F \neq 0 $:
+$$ \Rightarrow D\cdot A\sin(nx) = 0 $$
+
+Pela mesma lógica da condição anterior, para não haver solução trivial na variável $ x $, precisa-se que $ A \neq 0 $:
+$$ \Rightarrow D = 0 $$
+
+\begin{itemize}
+  \item Usando $ V(x, y, 0) = 0 $ na equação \ref{eq:problem_general_solution} sabendo que $ B = 0 $ e $ D = 0 $:
+\end{itemize}
+$$ \Rightarrow V(x, y, 0) = A\sin(nx)D\sin(my)[E\cdot 1 + F\cdot 1] = 0 $$
+$$ \Rightarrow A\sin(nx)D\sin(my)[E + F] = 0 $$
+
+Como já discutido anteriormente, para não haver solução trivial nas variáveis $ x $ e $ y $, precisa-se que $ A \neq 0 $ e $ C \neq 0 $:
+$$ \Rightarrow E + F = 0 $$
+$$ \Rightarrow E = -F $$
+
+Assim, para facilitar, chamar-se-á $ K' := E = -F $.
+
+Portanto, a solução do problema agora é:
+
+\begin{equation}
+    \label{eq:problem_part_solution}
+    \centering
+    V(x, y, z) = A\sin(nx)D\sin(my)(K'e^{kz} - K'e^{-kz})
+\end{equation}
+
+Agora, será utilizada a condição de fronteira $ V(x, y, a) = V_0 $ em \ref{eq:problem_part_solution}.
+No entanto, essa condição não é trivial de ser aplicada, visto que gera-se
+a seguinte sequência de afirmações:
+$$ \Rightarrow V(x, y, a) = A\sin(nx)D\sin(my)(K'e^{ka} - K'e^{-ka}) = V_0 $$
+
+Coletando as constantes e definindo $ C_{nm} = A\cdot B(K'e^{ka} - K'e^{-ka}) $:
+
+$$ \Rightarrow C_{nm}\sin(nx)\sin(my) = V_0 $$
+
+A multiplicação de duas funções periódicas dessa forma nunca será constante. Portanto, será
+preciso extrapolar o problema e considerar que a função potencial é uma função períodica ímpar tanto em
+$ x $, quanto em $ y $, formando uma espécie tabuleiro de xadrez com largura de posição $ a $ no espaço:
+
+\begin{figure}[h!]
+    \centering
+    \tdplotsetmaincoords{0}{130}
+    \begin{tikzpicture}[tdplot_main_coords]
+        % Define the cube's dimensions
+        \def\a{2} % length of the cube's sides
+        \def\d{5} % length of the axis
+
+        % Draw the axis
+        \draw[thick,->] (-0.1\d,0,0)-- (\d,0,0) node[anchor=north east]{$x$};
+        \draw[thick,->] (0,-0.1\d,0)-- (0,\d,0) node[anchor=north west]{$y$};
+
+        % Draw the checkboard
+        \filldraw[fill=black!30, draw=black] (0,0,\a) -- (\a,0,\a) -- (\a,\a,\a) -- (0,\a,\a) -- cycle;
+        \filldraw[fill=black!60, draw=black] (\a,0,-\a) -- (2*\a,0,-\a) -- (2*\a,\a,-\a) -- (\a,\a,-\a) -- cycle;
+        \filldraw[fill=black!60, draw=black] (0,\a,-\a) -- (\a,\a,-\a) -- (\a,2*\a,-\a) -- (0,2*\a,-\a) -- cycle;
+        \filldraw[fill=black!30, draw=black] (\a,\a,\a) -- (2*\a,\a,\a) -- (2*\a,2*\a,\a) -- (\a,2*\a,\a) -- cycle;
+
+        % Label the cube's faces and points on the axis
+        \node at (0.5*\a,0.5*\a,\a) {$ +V_0 $};
+        \node at (1.5*\a,0.5*\a,-\a) {$ -V_0 $};
+        \node at (1.5*\a,1.5*\a,\a) {$ +V_0 $};
+        \node at (0.5*\a,1.5*\a,-\a) {$ -V_0 $};
+
+        \node at (\a,-0.15,-\a) {$ a $};
+        \node at (-0.15,\a,-\a) {$ a $};
+        \node at (-0.15,0.15,\a) {$ a $};
+    \end{tikzpicture}
+    \caption{\label{plot:potencial_ext} Extrapolação do Potencial além de $ x = y = z = a $.}
+\end{figure}
 
 \section{Resolução Numérica do Problema}
 \label{sec:numerical}
