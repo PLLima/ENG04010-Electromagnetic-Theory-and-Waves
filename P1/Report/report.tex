@@ -150,7 +150,6 @@ $$ \Rightarrow \nabla^2V = 0 \text{ (Equação de Laplace)} $$
 
 Com isso, para modelar o comportamento de $ V(x, y, z) $ analiticamente, partir-se-á da Equação
 de Laplace com as Condições de Contorno fornecidas no problema:
-
 \begin{equation}
   \label{eq:laplace}
   \centering
@@ -206,21 +205,18 @@ a constante dos dois lados das equações obtém-se o seguinte sistema de Equaç
   \end{equation}
 
 Dadas essas EDOs, para alguma das variáveis, pode-se obter as seguintes soluções gerais:
-\begin{equation}
+
+\vspace*{-1.5\baselineskip}
+\begin{center}
+  \begin{align}
     \label{eq:laplace_solutions_degenerates}
-    \centering
-    S(s) = A_0s + B_0,\, K_s^2 = 0
-\end{equation}
-\begin{equation}
+    S(s) &= A_0s + B_0,\, K_s^2 = 0 \\
     \label{eq:laplace_solutions_real}
-    \centering
-    S(s) = A_1\sin(ks) + B_1\cos(ks),\, K_s^2 > 0,\, K_s = K \text{ real}
-\end{equation}
-\begin{equation}
+    S(s) &= A_1\sin(K_ss) + B_1\cos(K_ss),\, K_s^2 > 0,\, K_s \in \mathbb{R} \\
     \label{eq:laplace_solutions_imaginary}
-    \centering
-    S(s) = A_2\sinh(ks) + B_2\cosh(ks),\, K_s^2 < 0,\, K_s = K \text{ imaginário}
-\end{equation}
+    S(s) &= A_2\sinh(K_ss) + B_2\cosh(K_ss),\, K_s^2 < 0,\, K_s \in \mathbb{I}
+  \end{align}
+\end{center}
 
 Todas essas para $ S(s) = X(x), Y(y), Z(z) $. Para cada variável $ x $, $ y $ e $ z $, a
 forma da solução geral depende das Condições de Fronteira.
@@ -254,21 +250,17 @@ $$ y: V(x, 0, z) = 0,\, V(x, a, z) = 0 $$
 Logo, pelas constatações acima, sabe-se que $ K_x^2 > 0 $ e que $ K_y^2 > 0 $. Portanto, obtém-se as seguintes equações gerais para as
 variáveis do problema:
 
-\begin{equation}
+\vspace*{-1.5\baselineskip}
+\begin{center}
+  \begin{align}
     \label{eq:problem_general_solution_x}
-    \centering
-    X(x) = A\sin(kx) + B\cos(kx),\, K_x^2 > 0,\, K_x = K \text{ real}
-\end{equation}
-\begin{equation}
+    X(x) &= A\sin(K_xx) + B\cos(K_xx),\, K_x^2 > 0,\, K_x \in \mathbb{R} \\
     \label{eq:problem_general_solution_y}
-    \centering
-    Y(y) = C\sin(ky) + D\cos(ky),\, K_y^2 > 0,\, K_y = K \text{ real}
-\end{equation}
-\begin{equation}
+    Y(y) &= C\sin(K_yy) + D\cos(K_yy),\, K_y^2 > 0,\, K_y \in \mathbb{R} \\
     \label{eq:problem_general_solution_z}
-    \centering
-    Z(z) = Ee^{kz} + Fe^{-kz},\, K_z^2 < 0,\, K_z = K \text{ imaginário}
-\end{equation}
+    Z(z) &= E\sinh(K_zz) + F\cosh(K_zz),\, K_z^2 < 0,\, K_z \in \mathbb{I}
+  \end{align}
+\end{center}
 
 Será confirmado se essas constatações estão efetivamente corretas através da
 análise numérica na seção \ref{sec:numerical}.
@@ -278,7 +270,7 @@ Portanto, agrupando \ref{eq:problem_general_solution_x}, \ref{eq:problem_general
 \begin{equation}
     \label{eq:problem_general_solution}
     \centering
-    V(x, y, z) = [A\sin(kx) + B\cos(kx)][C\sin(ky) + D\cos(ky)][Ee^{kz} + Fe^{-kz}]
+    V(x, y, z) = [A\sin(K_xx) + B\cos(K_xx)][C\sin(K_yy) + D\cos(K_yy)][E\sinh(K_zz) + F\cosh(K_zz)]
 \end{equation}
 
 \subsection{Cálculo dos Coeficientes das Soluções}
@@ -289,14 +281,14 @@ Ou seja, com as condições que envolvem zerar as soluções gerais:
 \begin{itemize}
   \item Usando $ V(0, y, z) = 0 $ na equação \ref{eq:problem_general_solution}:
 \end{itemize}
-$$ \Rightarrow V(0, y, z) = [A \cdot 0 + B \cdot 1][C\sin(ky) + D\cos(ky)][Ee^{kz} + Fe^{-kz}] = 0 $$
-$$ \Rightarrow B[C\sin(ky) + D\cos(ky)][Ee^{kz} + Fe^{-kz}] = 0 $$
+$$ \Rightarrow V(0, y, z) = [A \cdot 0 + B \cdot 1][C\sin(K_yy) + D\cos(K_yy)][E\sinh(K_zz) + F\cosh(K_zz)] = 0 $$
+$$ \Rightarrow B[C\sin(K_yy) + D\cos(K_yy)][E\sinh(K_zz) + F\cosh(K_zz)] = 0 $$
 
 Para uma multiplicação ser nula, precisa-se algum dos termos multiplicados seja nulo. Como sabe-se que
 exponenciais nunca são nulas, para essa parcela ser nula, precisar-se-ia que tanto $ E = 0 $, quanto $ F = 0 $.
 No entanto, isso resulta na solução trivial para a variável $ z $, algo já constatado como falso. Logo, alguma
 das outras parcelas ou ambas deve ser nula:
-$$ \Rightarrow B[C\sin(ky) + D\cos(ky)] = 0 $$
+$$ \Rightarrow B[C\sin(K_yy) + D\cos(K_yy)] = 0 $$
 
 O mesmo raciocínio se aplica para as constantes $ C $ e $ D $, visto que as funções seno e cosseno nunca são zero
 ao mesmo tempo, exigindo que, para essa parcela ser nula, precisa-se da solução trivial para $ y $, algo analisado
@@ -306,11 +298,11 @@ $$ \Rightarrow B = 0 $$
 \begin{itemize}
   \item Usando $ V(x, 0, z) = 0 $ na equação \ref{eq:problem_general_solution} sabendo que $ B = 0 $:
 \end{itemize}
-$$ \Rightarrow V(x, 0, z) = A\sin(kx)[C\cdot 0 + D\cdot 1][Ee^{kz} + Fe^{-kz}] = 0 $$
-$$ \Rightarrow D\cdot A\sin(kx)[Ee^{kz} + Fe^{-kz}] = 0 $$
+$$ \Rightarrow V(x, 0, z) = A\sin(K_xx)[C\cdot 0 + D\cdot 1][E\sinh(K_zz) + F\cosh(K_zz)] = 0 $$
+$$ \Rightarrow D\cdot A\sin(K_xx)[E\sinh(K_zz) + F\cosh(K_zz)] = 0 $$
 
 Como já argumentado acima, $ E \neq 0 $ e $ F \neq 0 $:
-$$ \Rightarrow D\cdot A\sin(kx) = 0 $$
+$$ \Rightarrow D\cdot A\sin(K_xx) = 0 $$
 
 Pela mesma lógica da condição anterior, para não haver solução trivial na variável $ x $, precisa-se que $ A \neq 0 $:
 $$ \Rightarrow D = 0 $$
@@ -318,62 +310,80 @@ $$ \Rightarrow D = 0 $$
 \begin{itemize}
   \item Usando $ V(x, y, 0) = 0 $ na equação \ref{eq:problem_general_solution} sabendo que $ B = 0 $ e $ D = 0 $:
 \end{itemize}
-$$ \Rightarrow V(x, y, 0) = A\sin(kx)D\sin(ky)[E\cdot 1 + F\cdot 1] = 0 $$
-$$ \Rightarrow A\sin(kx)D\sin(ky)[E + F] = 0 $$
+$$ \Rightarrow V(x, y, 0) = A\sin(K_xx)C\sin(K_yy)[E\cdot 0 + F\cdot 1] = 0 $$
+$$ \Rightarrow F\cdot A\sin(K_xx)C\sin(K_yy) = 0 $$
 
 Como já discutido anteriormente, para não haver solução trivial nas variáveis $ x $ e $ y $, precisa-se que $ A \neq 0 $ e $ C \neq 0 $:
-$$ \Rightarrow E + F = 0 $$
-$$ \Rightarrow E = -F $$
+$$ \Rightarrow F = 0 $$
 
-Assim, para facilitar, chamar-se-á $ K' := E = -F $ e ainda $ C' := A\cdot C $. Desta forma, separando as exponenciais da equação e renomeando
-as variáveis $ A' = C'\cdot K' $:
+Assim, para facilitar, chamar-se-á $ A' := A\cdot C\cdot E $, ou seja:
 \begin{equation}
     \label{eq:problem_part_solution}
     \centering
-    V(x, y, z) = A'(e^{kz}\sin(kx)\sin(ky) - e^{-kz}\sin(kx)\sin(ky))
+    V(x, y, z) = A'\sinh(K_zz)\sin(K_xx)\sin(K_yy)
 \end{equation}
 
 \begin{itemize}
   \item Usando $ V(a, y, z) = 0 $ na equação \ref{eq:problem_part_solution}:
 \end{itemize}
-$$ \Rightarrow V(a, y, z) = A'(e^{kz}\sin(ka)\sin(ky) - e^{-kz}\sin(ka)\sin(ky)) = 0 $$
-$$ \Rightarrow V(a, y, z) = A'(e^{kz} - e^{-kz})\sin(ka)\sin(ky) = 0 $$
+$$ \Rightarrow V(a, y, z) = A'\sinh(K_zz)\sin(K_xa)\sin(K_yy) = 0 $$
 
-Como a contante $ A' $ não pode ser nula e as funções seno e exponencial são não nulas para diversos valores de $ y $ e $ z $, resta que:
-$$ \Rightarrow \sin(ka) = 0 $$
+Como a contante $ A' $ não pode ser nula e as funções seno e seno hiperbólico são não nulas para diversos valores de $ y $ e $ z $, resta que:
+$$ \Rightarrow \sin(K_xa) = 0 $$
 
-A função seno é periódica e apresenta valor zero quando o seu argumento vale $ n\pi $, onde $ n \in \mathbb{Z} $:
-$$ \Rightarrow ka = n\pi $$
-$$ k = \frac{n\pi}{a},\, n \in \mathbb{Z} $$
-
-Esse fato é reforçado pela aplicação de outra Condição de Fronteira:
+A função seno é periódica e apresenta valor zero quando o seu argumento vale $ i\pi $, onde $ i \in \mathbb{Z} $:
+$$ \Rightarrow K_xa = i\pi $$
+$$ K_x = \frac{i\pi}{a},\, i \in \mathbb{Z} $$
 
 \begin{itemize}
   \item Usando $ V(x, a, z) = 0 $ na equação \ref{eq:problem_part_solution}:
 \end{itemize}
-$$ \Rightarrow V(x, a, z) = A'(e^{kz}\sin(kx)\sin(ka) - e^{-kz}\sin(kx)\sin(ka)) = 0 $$
-$$ \Rightarrow V(x, a, z) = A'(e^{kz} - e^{-kz})\sin(kx)\sin(ka) = 0 $$
+$$ \Rightarrow V(x, a, z) = A'\sinh(K_zz)\sin(K_xx)\sin(K_ya) = 0 $$
 
-Pelos argumentos anteriores, resta que:
-$$ \Rightarrow \sin(ka) = 0 $$
+Pelo mesmo raciocínio anterior, tem-se que:
+$$ \Rightarrow \sin(K_ya) = 0 $$
+$$ \Rightarrow K_ya = j\pi $$
+$$ K_y = \frac{j\pi}{a},\, j \in \mathbb{Z} $$
 
-Ou seja, obteve-se um resultado para $ k $ que satisfaz todas as Condições de Fronteira:
+Agora, tomando a última equação de \ref{eq:laplace_edos}:
+$$ K_x^2 + K_y^2 + K_z^2 = 0 $$
+$$ \Rightarrow -K_z^2 = K_x^2 + K_y^2 $$
 
-\begin{equation}
-    \label{eq:k_values}
-    \centering
-    k = \frac{n\pi}{a},\, n \in \mathbb{Z}
-\end{equation}
+Como $ K_z^2 < 0 $, $ K_y^2 > 0 $ e $ K_x^2 > 0 $,
+$$ \Rightarrow K_z^2 = K_x^2 + K_y^2 $$
+$$ \Rightarrow K_z = \pm\sqrt{K_x^2 + K_y^2} $$
+
+Substituindo os valores de $ K_x $ e $ K_y $ na equação anterior, tem-se que:
+$$ \Rightarrow K_z = \pm\sqrt{\left(\frac{i\pi}{a}\right)^2 + \left(\frac{j\pi}{a}\right)^2} $$
+$$ \Rightarrow K_z = \pm\frac{\pi}{a}\sqrt{i^2 + j^2} $$
+
+No entanto, como a função seno hiperbólico é ímpar e a solução do problema que adere
+às condições iniciais exige que o potencial não seja negativo dentro do cubo, sabe-se que:
+$$ \Rightarrow K_z = \frac{\pi}{a}\sqrt{i^2 + j^2} $$
+
+Portanto, em resumo:
+
+\vspace*{-1.5\baselineskip}
+\begin{center}
+  \begin{align}
+    \label{eq:Kx_values}
+    K_x &= \frac{i\pi}{a},\, i \in \mathbb{Z} \\
+    \label{eq:Ky_values}
+    K_y &= \frac{j\pi}{a},\, j \in \mathbb{Z} \\
+    \label{eq:Kz_values}
+    K_z &= \frac{\pi}{a}\sqrt{i^2 + j^2},\, i, j \in \mathbb{Z}
+  \end{align}
+\end{center}
 
 Por fim, será utilizada a condição de fronteira $ V(x, y, a) = V_0 $ em \ref{eq:problem_part_solution}.
 No entanto, essa condição não é trivial de ser aplicada, visto que gera-se
 a seguinte sequência de afirmações:
-$$ \Rightarrow V(x, y, z) = A'(e^{ka}\sin(kx)\sin(ky) - e^{-ka}\sin(kx)\sin(ky)) = V_0 $$
-$$ \Rightarrow A'(e^{ka} - e^{-ka})\sin(kx)\sin(ky) = V_0 $$
+$$ \Rightarrow V(x, y, a) = A'\sinh(K_za)\sin(K_xx)\sin(K_yy) = V_0 $$
 
-Coletando as constantes e definindo $ C_{k} := A'(e^{ka} - e^{-ka}) $, obtém-se que
+Coletando as constantes e definindo $ C_{ij} := A'\sinh(K_za) $, obtém-se que
 
-$$ \Rightarrow C_{k}\sin(kx)\sin(ky) = V_0 $$
+$$ \Rightarrow C_{ij}\sin(K_xx)\sin(K_yy) = V_0 $$
+$$ \Rightarrow C_{ij}\sin\left(\frac{i\pi x}{a}\right)\sin\left(\frac{j\pi y}{a}\right) = V_0 $$
 
 A multiplicação de duas funções periódicas dessa forma nunca será constante. Portanto, será
 preciso extrapolar o problema e considerar que a função potencial é uma função períodica ímpar tanto em
@@ -412,6 +422,15 @@ $ x $, quanto em $ y $, formando uma espécie tabuleiro de xadrez com largura de
 
 Com essa suposição, já que o potencial fora do cubo não é importante para o problema, pode-se
 aplicar a teoria das Séries de Fourrier para achar uma solução que satisfaça às condições acima.
+
+Como há uma infinidade de múltiplos de $ i $ e $ j $ que fazem as contantes $ C_{ij} $, $ K_x $ e $ K_y $ satisfazerem as
+Condições de Contorno, sabe-se que, nessa última Condição de Contorno, precisa-se de uma resposta da forma:
+$$ \sum_{i=1}^{\infty} \sum_{j=1}^{\infty} C_{ij}\sin\left(\frac{i\pi x}{a}\right)\sin\left(\frac{j\pi y}{a}\right) = V_0 $$
+
+Como sabe-se que $ A' = \frac{C_{ij}}{\sinh(K_za)} = \frac{C_{ij}}{\sinh(\pi\sqrt{i^2 + j^2})} $, a resposta final é da forma:
+$$ V(x, y, z) = \sum_{i=1}^{\infty} \sum_{j=1}^{\infty} \frac{C_{ij}}{\sinh(\pi\sqrt{i^2 + j^2})}\sinh\left(\frac{\pi}{a}\sqrt{i^2 + j^2}z\right)\sin\left(\frac{i\pi x}{a}\right)\sin\left(\frac{j\pi y}{a}\right) $$
+
+Agora, resta determinar a última constante que é $ C_{ij} $.
 
 \section{Resolução Numérica do Problema}
 \label{sec:numerical}
