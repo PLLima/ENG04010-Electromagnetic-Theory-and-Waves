@@ -1,5 +1,13 @@
 MWS Result File Version 20150206
-size=i:40
+size=i:42
+
+type=s:HIDDENITEM
+problemclass=s::8:1000
+visibility=s:hidden
+creation=s:internal
+lifetime=s:rebuild
+result=s:1
+files=s:Potential (Es) (X).rd1
 
 type=s:HIDDENITEM
 problemclass=s::8:1000
@@ -353,4 +361,15 @@ result=s:1
 treepath=s:Tables\1D Results\Potential (Es) (Z)
 files=s:Potential (Es) (Z).rt1
 files=s:Potential (Es) (Z).rd1
+
+type=s:TABLE
+subtype=s:user
+problemclass=s::8:1000
+visibility=s:visible
+creation=s:internal
+lifetime=s:surviveparchange
+result=s:1
+treepath=s:Tables\1D Results\Potential (Es) (X)
+files=s:Potential (Es) (X).rt1
+files=s:Potential (Es) (X).rd1
 

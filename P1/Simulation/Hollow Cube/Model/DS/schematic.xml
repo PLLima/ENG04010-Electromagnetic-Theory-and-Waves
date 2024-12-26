@@ -91,7 +91,7 @@
             </Ports>
         </Pins>
         <Image IconPosition="TopRight" FileName="../3D/Model.dib" Scale="AutoFit">
-            <Size Height="392" Width="512"/>
+            <Size Height="256" Width="256"/>
         </Image>
         <Pos X="75" Y="-12.5"/>
         <ToolTip>CST EM STUDIO schematic block EMSSCHEM1</ToolTip>

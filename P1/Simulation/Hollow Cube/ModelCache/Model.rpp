@@ -1,7 +1,7 @@
 11
 0
 0
-2
+3
 Potential (Es) (Y)
 Evaluate Field in arbitrary Coordinates
 1
@@ -24,4 +24,15 @@ Evaluate Field in arbitrary Coordinates.rtp
 VBA
 1
 Potential (Es) (Z)
+Potential (Es) (X)
+Evaluate Field in arbitrary Coordinates
+1
+1D
+2D and 3D Field Results
+P
+ED10
+Evaluate Field in arbitrary Coordinates.rtp
+VBA
+1
+Potential (Es) (X)
 0
