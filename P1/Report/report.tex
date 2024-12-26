@@ -119,7 +119,7 @@ $ z = a $) é mantida em potencial contante e uniforme $ V_0 $.
         \node at (0,\a+0.25,0.25) {$ a $};
         \node at (0,0.25,\a+0.25) {$ a $};
     \end{tikzpicture}
-    \caption{\label{plot:assignment} Cubo Condutor de Dimensões Laterais $ a $.}
+    \caption{\label{plot:assignment} Cubo Condutor de Dimensões Laterais $ a $}
 \end{figure}
 
 Com isso em mente, faça o que se pede:
@@ -415,7 +415,7 @@ $ x $, quanto em $ y $, formando uma espécie tabuleiro de xadrez com largura de
         \node at (2*\a, -0.35, 0) {$ 2a $};
         \node at (-0.35, 2*\a, 0) {$ 2a $};
     \end{tikzpicture}
-    \caption{\label{plot:potencial_ext} Extrapolação do Potencial além de $ x = y = z = a $.}
+    \caption{\label{plot:potential_ext} Extrapolação do Potencial além de $ x = y = z = a $}
 \end{figure}
 
 Com essa suposição, já que o potencial fora do cubo não é importante para o problema, pode-se
@@ -520,17 +520,49 @@ Para realizar a simulação, estabeleceu-se os mesmo parâmetros utilizados na s
   \item Plano de corte em $ x = \frac{a}{2} $.
 \end{itemize}
 
+Além disso, para ser possível obter-se resultados na versão gratuita do simulador, colocou-se um pequeno espaçamento $ \varepsilon = 0,1\text{mm} $ entre cada face do cubo.
+Para conseguir bons resultados, utilizou-se o tipo de \textit{mesh} hexaédrico, com acurácia $ \text{acc} = 10^{-9} $.
 
+Com esses parâmetros, gerou-se os seguintes gráficos no simulador \href{https://www.3ds.com/edu/education/students/solutions/cst-le}{CST Studio Suite 2024 - Learning Edition}:
 
-\section{Exemplos}
-
-\begin{equation}
-  \label{eq:quad_cascade}
+\begin{figure}[h!]
   \centering
-  \begin{matrix}
-    a_{11} = a^{'}_{11}a^{''}_{11} + a^{'}_{12}a^{''}_{21} & \hspace{10pt} a_{12} = a^{'}_{11}a^{''}_{12} + a^{'}_{12}a^{''}_{22} \\\\
-    a_{21} = a^{'}_{21}a^{''}_{11} + a^{'}_{22}a^{''}_{21} & \hspace{10pt} a_{22} = a^{'}_{21}a^{''}_{12} + a^{'}_{22}a^{''}_{22}
-  \end{matrix}
-\end{equation}
+  \includegraphics[width=0.5\textwidth]{images/plots/simulation_heatmap.png}
+  \caption{\label{plot:simul_potential_heatmap} Mapa de Calor do Potencial}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{images/plots/simulation_isolines.png}
+  \caption{\label{plot:simul_potential_isolines} Linhas Equipotenciais}
+\end{figure}
+
+Apesar dos efeitos de borda, gerou-se resultados que representam funções contínuas. Comparando com os gráficos gerados pelo
+cálculo númerico da solução análitica, observa-se grande semelhança entre as conclusões obtidas pelas duas abordagens.
+
+Para analisar o efeito nas variáveis individualmente, gerou-se gráficos unidimensionais ao fixar as duas outras variáveis no centro
+do cubo:
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.85\textwidth]{images/plots/simulation_potential_x.png}
+  \caption{\label{plot:simul_potential_x} Comportamento da Variável $ x $}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.85\textwidth]{images/plots/simulation_potential_y.png}
+  \caption{\label{plot:simul_potential_y} Comportamento da Variável $ y $}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.85\textwidth]{images/plots/simulation_potential_z.png}
+  \caption{\label{plot:simul_potential_z} Comportamento da Variável $ z $}
+\end{figure}
+
+Esses últimos \textit{plots} confirmam as hipóteses iniciais da solução analítica. Essas imagens mostram que,
+de fato, as variáveis $ x $ e $ y $ apresentam o mesmo comportamento periódico e senoidal e que a variável $ z $
+apresenta crescimento exponencial.
 
 \end{document}
