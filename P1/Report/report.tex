@@ -270,7 +270,7 @@ Portanto, agrupando \ref{eq:problem_general_solution_x}, \ref{eq:problem_general
 \begin{equation}
     \label{eq:problem_general_solution}
     \centering
-    V(x, y, z) = [A\sin(|K_x|x) + B\cos(|K_x|x)][C\sin(|K_y|y) + D\cos(|K_y|y)][E\sinh(|K_z|z) + F\cosh(|K_z|z)]
+    {\scriptstyle V(x, y, z) = [A\sin(|K_x|x) + B\cos(|K_x|x)][C\sin(|K_y|y) + D\cos(|K_y|y)][E\sinh(|K_z|z) + F\cosh(|K_z|z)]}
 \end{equation}
 
 \subsection{Cálculo dos Coeficientes das Soluções}
@@ -380,15 +380,15 @@ Coletando as constantes e definindo $ C_{ij} := A'\sinh(|K_z|a) $, obtém-se que
 
 $$ \Rightarrow C_{ij}\sin(|K_x|x)\sin(|K_y|y) = V_0 $$
 $$ \Rightarrow C_{ij}\sin\left(\frac{i\pi x}{a}\right)\sin\left(\frac{j\pi y}{a}\right) = V_0 $$
-
+\clearpage
 A multiplicação de duas funções periódicas dessa forma nunca será constante. Portanto, será
 preciso extrapolar o problema e considerar que a função potencial é uma função períodica ímpar tanto em
 $ x $, quanto em $ y $, formando uma espécie tabuleiro de xadrez com largura de posição $ a $ no espaço:
 
-\begin{figure}[h!]
+\begin{figure}[!h]
     \centering
     \tdplotsetmaincoords{0}{130}
-    \begin{tikzpicture}[tdplot_main_coords, scale=0.65]
+    \begin{tikzpicture}[tdplot_main_coords, scale=0.8]
         % Define the cube's dimensions
         \def\a{2} % length of the cube's sides
         \def\d{5} % length of the axis
@@ -430,9 +430,82 @@ Condições de Contorno, sabe-se que, nessa última Condição de Contorno, prec
 \end{equation}
 
 Como sabe-se, manipulando a sua definição, que $ A' = \frac{C_{ij}}{\sinh(|K_z|a)} = \frac{C_{ij}}{\sinh(\pi\sqrt{i^2 + j^2})} $, a resposta final é da forma:
-$$ V(x, y, z) = \sum_{i=1}^{\infty} \sum_{j=1}^{\infty} \frac{C_{ij}}{\sinh(\pi\sqrt{i^2 + j^2})}\sinh\left(\frac{\pi}{a}\sqrt{i^2 + j^2}z\right)\sin\left(\frac{i\pi x}{a}\right)\sin\left(\frac{j\pi y}{a}\right) $$
+\begin{equation}
+  \label{eq:problem_part2_solution}
+  \centering
+  V(x, y, z) = \sum_{i=1}^{\infty} \sum_{j=1}^{\infty} \frac{C_{ij}}{\sinh(\pi\sqrt{i^2 + j^2})}\sinh\left(\frac{\pi}{a}\sqrt{i^2 + j^2}z\right)\sin\left(\frac{i\pi x}{a}\right)\sin\left(\frac{j\pi y}{a}\right)
+\end{equation}
 
 Agora, resta determinar a última constante que é $ C_{ij} $ a partir da equação \ref{eq:last_condition}.
+
+Para fazer isso, será utilizado o "Truque de Fourrier" tanto na variável $ x $, quanto na variável $ y $. Ou seja, multiplicar-se-á a equação
+\ref{eq:last_condition} por $ \sin\left(\frac{n\pi x}{a}\right)\sin\left(\frac{m\pi y}{a}\right) $, com $ n, m \in \mathbb{Z} $:
+$$ \sum_{i=1}^{\infty} \sum_{j=1}^{\infty} C_{ij}\sin\left(\frac{i\pi x}{a}\right)\sin\left(\frac{j\pi y}{a}\right)\sin\left(\frac{n\pi x}{a}\right)\sin\left(\frac{m\pi y}{a}\right) = V_0\sin\left(\frac{n\pi x}{a}\right)\sin\left(\frac{m\pi y}{a}\right) $$
+$$ \Rightarrow \sum_{i=1}^{\infty} \sum_{j=1}^{\infty} C_{ij}\sin\left(\frac{i\pi x}{a}\right)\sin\left(\frac{n\pi x}{a}\right)\sin\left(\frac{j\pi y}{a}\right)\sin\left(\frac{m\pi y}{a}\right) = V_0\sin\left(\frac{n\pi x}{a}\right)\sin\left(\frac{m\pi y}{a}\right) $$
+
+Agora, utilizando a identidade trigonométrica $ \sin(a)\sin(b) = \frac{\cos(a - b) - \cos(a + b)}{2} $ no lado esquerdo, obtém desse lado:
+$$ \Rightarrow \sum_{i=1}^{\infty} \sum_{j=1}^{\infty} C_{ij}\left[\frac{\cos\left(\frac{i\pi x}{a} - \frac{n\pi x}{a}\right) - \cos\left(\frac{i\pi x}{a} + \frac{n\pi x}{a}\right)}{2}\right]\left[\frac{\cos\left(\frac{j\pi y}{a} - \frac{m\pi y}{a}\right) - \cos\left(\frac{j\pi y}{a} + \frac{m\pi y}{a}\right)}{2}\right]$$
+$$ \Rightarrow \frac{1}{4}\sum_{i=1}^{\infty} \sum_{j=1}^{\infty} C_{ij}\left[\cos\left(\frac{\pi x(i - n)}{a}\right) - \cos\left(\frac{\pi x(i + n)}{a}\right)\right]\left[\cos\left(\frac{\pi y(j - m)}{a}\right) - \cos\left(\frac{\pi y(j + m)}{a}\right)\right]$$
+
+Aplicando a integral dupla $ \int_{0}^{a}dy\int_{0}^{a}dx $ no lado esquerdo:
+$$ \textstyle \Rightarrow \frac{1}{4}\int_{0}^{a}\int_{0}^{a}\sum_{i=1}^{\infty} \sum_{j=1}^{\infty} C_{ij}\left[\cos\left(\frac{\pi x(i - n)}{a}\right) - \cos\left(\frac{\pi x(i + n)}{a}\right)\right]\left[\cos\left(\frac{\pi y(j - m)}{a}\right) - \cos\left(\frac{\pi y(j + m)}{a}\right)\right]dxdy $$
+$$ \textstyle \Rightarrow \frac{1}{4} \sum_{i=1}^{\infty} \sum_{j=1}^{\infty} C_{ij} \int_{0}^{a} \left[\cos\left(\frac{\pi x(i - n)}{a}\right) - \cos\left(\frac{\pi x(i + n)}{a}\right)\right]dx\int_{0}^{a}\left[\cos\left(\frac{\pi y(j - m)}{a}\right) - \cos\left(\frac{\pi y(j + m)}{a}\right)\right]dy $$
+
+Neste ponto, caso $ n \neq i $ ou (inclusivo) $ m \neq j $:
+$$ \scriptstyle \Rightarrow \frac{a^2}{4\pi^2} \sum_{i=1}^{\infty} \sum_{j=1}^{\infty} C_{ij} \left[\frac{1}{i - n}\sin\left(\frac{\pi x(i - n)}{a}\right) - \frac{1}{i + n}\sin\left(\frac{\pi x(i + n)}{a}\right)\right]_{0}^{a} \left[\frac{1}{j - m}\sin\left(\frac{\pi y(j - m)}{a}\right) - \frac{1}{j + m}\sin\left(\frac{\pi y(j + m)}{a}\right)\right]_{0}^{a} $$
+
+Avaliando a integral acima, quando $ x = 0 $ e $ y = 0 $, observa-se que a afirmação acima é nula. Caso $ x = a $ e $ y = a $, o argumento dos senos será um múltiplo inteiro qualquer de $ \pi $, zerando novamente toda a afirmação. Com isso, concluí-se que:
+$$ n \neq i \lor m \neq j \rightarrow \text{ a afirmação esquerda é nula.} $$
+
+Agora, caso $ n = i $ e $ m = j $:
+$$ \Rightarrow \frac{1}{4} \sum_{i=1}^{\infty} \sum_{j=1}^{\infty} C_{ij} \left[\int_{0}^{a}dx - \int_{0}^{a}\cos\left(\frac{2i\pi x}{a}\right)dx\right]\left[\int_{0}^{a}dy - \int_{0}^{a}\cos\left(\frac{2j\pi y}{a}\right)dy\right] $$
+$$ \Rightarrow \frac{1}{4} \sum_{i=1}^{\infty} \sum_{j=1}^{\infty} C_{ij} \left[x - \frac{a}{2i\pi}\sin\left(\frac{2i\pi x}{a}\right)\right]_{0}^{a}\left[y - \frac{a}{2j\pi}\sin\left(\frac{2j\pi y}{a}\right)\right]_{0}^{a} $$
+
+Ou seja, como qualquer múltiplo inteiro de $ \pi $ torna a função seno nula, tem-se, no lado esquerdo:
+\begin{equation}
+  \label{eq:Cij_left}
+  \centering
+  \frac{a^2}{4} \sum_{i=1}^{\infty} \sum_{j=1}^{\infty} C_{ij}
+\end{equation}
+
+Agora, voltando para o lado direito da equação e aplicando a mesma integral dupla:
+$$ \Rightarrow \int_{0}^{a} \int_{0}^{a} V_0\sin\left(\frac{n\pi x}{a}\right)\sin\left(\frac{m\pi y}{a}\right)dxdy $$
+$$ \Rightarrow V_0 \int_{0}^{a} \sin\left(\frac{n\pi x}{a}\right)dx \int_{0}^{a} \sin\left(\frac{m\pi y}{a}\right)dy $$
+$$ \Rightarrow \frac{a^2V_0}{\pi^2} \left[-\frac{1}{n}\cos\left(\frac{n\pi x}{a}\right)\right]_{0}^{a} \left[-\frac{1}{m}\cos\left(\frac{m\pi y}{a}\right)\right]_{0}^{a} $$
+$$ \Rightarrow \frac{a^2V_0}{\pi^2} \left[\frac{1}{n} - \frac{1}{n}\cos\left(n\pi\right)\right] \left[\frac{1}{m} - \frac{1}{m}\cos\left(m\pi\right)\right] $$
+
+Nesse ponto, o valor da integral depende da paridade de $ n $ e $ m $. Caso $ n $ ou (inclusivo) $ m $ for par, a integral se torna nula. Logo, precisa-se que $ n = i = 2l - 1 $ e $ m = j = 2k - 1 $, com $ l, k \in \mathbb{Z} $ para que o lado
+direito não seja nulo e valha:
+\begin{equation}
+  \label{eq:Cij_right}
+  \centering
+  \frac{4a^2V_0}{\pi^2 nm},\, n = 2l - 1,\, m = 2k - 1,\, l, k \in \mathbb{Z}
+\end{equation}
+
+Portanto, reunindo novamente o lado esquerdo \ref{eq:Cij_left} e o lado direto \ref{eq:Cij_right}, mantendo as restrições impostas por cada lado, tem-se:
+$$ \Rightarrow \frac{a^2}{4} \sum_{l=1}^{\infty} \sum_{k=1}^{\infty} C_{(2l - 1)(2k - 1)} = \frac{4a^2V_0}{\pi^2 (2l - 1)(2k - 1)} $$
+$$ \Rightarrow \sum_{l=1}^{\infty} \sum_{k=1}^{\infty} C_{(2l - 1)(2k - 1)} = \frac{16V_0}{\pi^2(2l - 1)(2k - 1)} $$
+
+Sem perda de generalidade, como, para cada valor de iterador $ l $ e $ k $, obtém-se uma nova igualdade, obtém-se:
+$$ \Rightarrow \sum_{l=1}^{\infty} \sum_{k=1}^{\infty} C_{(2l - 1)(2k - 1)} = \sum_{l=1}^{\infty} \sum_{k=1}^{\infty} \frac{16V_0}{\pi^2(2l - 1)(2k - 1)} $$
+$$ \Rightarrow C_{(2l - 1)(2k - 1)} = \frac{16V_0}{\pi^2(2l - 1)(2k - 1)} $$
+
+Retornando essa constante para a equação \ref{eq:problem_part2_solution}, tem-se que:
+$$ \scriptstyle V(x, y, z) = \sum_{l=1}^{\infty} \sum_{k=1}^{\infty} \frac{16V_0}{\pi^2(2l - 1)(2k - 1)\sinh(\pi\sqrt{(2l - 1)^2 + (2k - 1)^2})}\sinh\left(\frac{\pi}{a}\sqrt{(2l - 1)^2 + (2k - 1)^2}z\right)\sin\left(\frac{(2l - 1)\pi x}{a}\right)\sin\left(\frac{(2k - 1)\pi y}{a}\right) $$
+
+\subsection{Forma Análitica Final}
+Para finalizar, reunindo a última equação anterior, movendo alguns termos para organizá-la e renomeando os iteradores, obteve-se a seguinte expressão:
+\begin{equation}
+  \label{eq:problem_solution_final}
+  \centering
+  V(x, y, z) = \frac{16V_0}{\pi^2}\sum_{i=1}^{\infty} \sum_{j=1}^{\infty} \frac{1}{ij\sinh(\pi\sqrt{i^2 + j^2})}\sinh\left(\frac{\pi}{a}\sqrt{i^2 + j^2}z\right)\sin\left(\frac{i\pi x}{a}\right)\sin\left(\frac{j\pi y}{a}\right)
+\end{equation}
+
+Onde, na expressão acima, $ i = 1, 3, 5, \ldots, 2l - 1, \ldots $ e $ j = 1, 3, 5, \ldots, 2k - 1, \ldots $
+
+\begin{center}
+  \[ \scalebox{3}{$ * $} \]
+\end{center}
 
 \section{Resolução Numérica do Problema}
 \label{sec:numerical}
