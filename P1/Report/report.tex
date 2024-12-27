@@ -30,6 +30,9 @@
 \usepackage{tikz}
 \usepackage{tikz-3dplot}
 
+\usepackage{listings}
+\renewcommand{\lstlistingname}{Código}
+
 % Set section numbering from 1.1
 \renewcommand{\thesection}{\arabic{section}.1}
 
@@ -145,7 +148,7 @@ Logo, unindo essa equação e a primeira equação dessa seção:
 $$ \Rightarrow \overrightarrow{\nabla}\cdot(-\overrightarrow{\nabla} V) = \frac{\rho_V}{\varepsilon_0} $$
 $$ \Rightarrow \nabla^2V = -\frac{\rho_V}{\varepsilon_0} \text{ (Equação de Poisson)} $$
 
-Para o caso do problema onde não há cargas onde procura-se determinar o potencial elétrico:
+Para o caso do problema, onde não há cargas no local que procura-se determinar o potencial elétrico:
 $$ \Rightarrow \nabla^2V = 0 \text{ (Equação de Laplace)} $$
 
 Com isso, para modelar o comportamento de $ V(x, y, z) $ analiticamente, partir-se-á da Equação
@@ -349,7 +352,7 @@ Agora, tomando a última equação de \ref{eq:laplace_edos}:
 $$ K_x^2 + K_y^2 + K_z^2 = 0 $$
 $$ \Rightarrow -K_z^2 = K_x^2 + K_y^2 $$
 
-Como $ K_z^2 < 0 $, $ K_y^2 > 0 $ e $ K_x^2 > 0 $,
+Como $ K_z^2 < 0 $, $ K_y^2 > 0 $ e $ K_x^2 > 0 $ e não há superposição entre essas variáveis (são vetores normais),
 $$ \Rightarrow |K_z|^2 = |K_x|^2 + |K_y|^2 $$
 $$ \Rightarrow |K_z| = \sqrt{|K_x|^2 + |K_y|^2} $$
 
@@ -438,12 +441,12 @@ Como sabe-se, manipulando a sua definição, que $ A' = \frac{C_{ij}}{\sinh(|K_z
 
 Agora, resta determinar a última constante que é $ C_{ij} $ a partir da equação \ref{eq:last_condition}.
 
-Para fazer isso, será utilizado o "Truque de Fourrier" tanto na variável $ x $, quanto na variável $ y $. Ou seja, multiplicar-se-á a equação
+Para fazer isso, será utilizado o ``Truque de Fourrier" tanto na variável $ x $, quanto na variável $ y $. Ou seja, multiplicar-se-á a equação
 \ref{eq:last_condition} por $ \sin\left(\frac{n\pi x}{a}\right)\sin\left(\frac{m\pi y}{a}\right) $, com $ n, m \in \mathbb{Z} $:
 $$ \sum_{i=1}^{\infty} \sum_{j=1}^{\infty} C_{ij}\sin\left(\frac{i\pi x}{a}\right)\sin\left(\frac{j\pi y}{a}\right)\sin\left(\frac{n\pi x}{a}\right)\sin\left(\frac{m\pi y}{a}\right) = V_0\sin\left(\frac{n\pi x}{a}\right)\sin\left(\frac{m\pi y}{a}\right) $$
 $$ \Rightarrow \sum_{i=1}^{\infty} \sum_{j=1}^{\infty} C_{ij}\sin\left(\frac{i\pi x}{a}\right)\sin\left(\frac{n\pi x}{a}\right)\sin\left(\frac{j\pi y}{a}\right)\sin\left(\frac{m\pi y}{a}\right) = V_0\sin\left(\frac{n\pi x}{a}\right)\sin\left(\frac{m\pi y}{a}\right) $$
 
-Agora, utilizando a identidade trigonométrica $ \sin(a)\sin(b) = \frac{\cos(a - b) - \cos(a + b)}{2} $ no lado esquerdo, obtém desse lado:
+Agora, utilizando a identidade trigonométrica $ \sin(a)\sin(b) = \frac{\cos(a - b) - \cos(a + b)}{2} $ no lado esquerdo, obtém-se desse lado:
 $$ \Rightarrow \sum_{i=1}^{\infty} \sum_{j=1}^{\infty} C_{ij}\left[\frac{\cos\left(\frac{i\pi x}{a} - \frac{n\pi x}{a}\right) - \cos\left(\frac{i\pi x}{a} + \frac{n\pi x}{a}\right)}{2}\right]\left[\frac{\cos\left(\frac{j\pi y}{a} - \frac{m\pi y}{a}\right) - \cos\left(\frac{j\pi y}{a} + \frac{m\pi y}{a}\right)}{2}\right]$$
 $$ \Rightarrow \frac{1}{4}\sum_{i=1}^{\infty} \sum_{j=1}^{\infty} C_{ij}\left[\cos\left(\frac{\pi x(i - n)}{a}\right) - \cos\left(\frac{\pi x(i + n)}{a}\right)\right]\left[\cos\left(\frac{\pi y(j - m)}{a}\right) - \cos\left(\frac{\pi y(j + m)}{a}\right)\right]$$
 
@@ -501,7 +504,7 @@ Para finalizar, reunindo a última equação, movendo alguns termos para organiz
   V(x, y, z) = \frac{16V_0}{\pi^2}\sum_{i=1}^{\infty} \sum_{j=1}^{\infty} \frac{1}{ij\sinh(\pi\sqrt{i^2 + j^2})}\sinh\left(\frac{\pi z}{a}\sqrt{i^2 + j^2}\right)\sin\left(\frac{i\pi x}{a}\right)\sin\left(\frac{j\pi y}{a}\right)
 \end{equation}
 
-Onde, na expressão acima, $ i = 1, 3, 5, \ldots, 2l - 1, \ldots $ e $ j = 1, 3, 5, \ldots, 2k - 1, \ldots $, $ 0 < x < a $, $ 0 < y < a $ e $ 0 < z < a $.
+Onde, na expressão acima, $ i = 1, 3, 5, \ldots, 2l - 1, \ldots $ e $ j = 1, 3, 5, \ldots, 2k - 1, \ldots $, $ 0 < x < a $, $ 0 < y < a $, $ 0 < z < a $, $ a > 0,\, a \in \mathbb{R} $ e $ V_0 \in \mathbb{R} $.
 
 \begin{center}
   \[ \scalebox{3}{$ * $} \]
@@ -510,7 +513,72 @@ Onde, na expressão acima, $ i = 1, 3, 5, \ldots, 2l - 1, \ldots $ e $ j = 1, 3,
 \section{Resolução Numérica do Problema}
 \label{sec:numerical}
 \subsection{Comportamento Numérico da Solução}
+
+Para obter um gráfico de comparação com a simulação realizada na próxima subseção, utilizar-se-á os seguintes parâmetros na solução analítica:
+
+\begin{itemize}
+  \item $ a = 3 \text{mm}$;
+  \item $ V_0 = 100 \text{V}$;
+  \item Plano de corte em $ x = \frac{a}{2} $;
+  \item 6 Primeiros termos com iterador $ i $ e 30 primeiros termos com iterador $ j $;
+  \item 180 termos expandidos da série para gerar os gráficos (serão transcritos aqui apenas 5 desses).
+\end{itemize}
+
+Com esses critérios em mente, a expansão de cinco termos da solução analítica, todos com $ i = 1 $, se dá por:
+\begin{equation}
+  \label{eq:numerical_solution_expanded}
+  \centering
+  \begin{aligned}
+    V\left(\frac{a}{2},y,z\right) &\approx 3,\!81\sinh(1480,\!96z)\sin(1047,\!20y) \\
+                                  &+ 0,\!005\sinh(3311,\!53z)\sin(3141,\!59y) \\
+                                  &+ 7,\!16\cdot 10^{-6} \sinh(5339,\!68z)\sin(5235,\!99y) \\
+                                  &+ 10^{-8} \sinh(7404,\!81z) \sin(7330,\!38y) \\
+                                  &+ 1,\!59\cdot 10^{-11} \sinh(9482,\!78z) \sin(9424,\!78y)
+  \end{aligned}
+\end{equation}
+
+Para gerar os gráficos, utilizou-se a plataforma \href{https://www.scilab.org/download/scilab-2024.1.0}{Scilab}. Nela, gerou-se o seguinte código
+para construir as visualizações desta seção:
+
+\lstinputlisting[caption=Geração de Gráficos no Scilab,
+                captionpos=b,
+                basicstyle=\footnotesize,
+                numbers=left,
+                columns=flexible,
+                xleftmargin=26pt,
+                frame=single,
+                framexleftmargin=22pt,
+                aboveskip=15pt,
+                breaklines=true,
+                language=C]{../Numerical_Analysis/numerical_analysis.sci}
+
+A partir desse código, gerou-se os seguintes gráficos que serão analisados com mais detalhes na subseção \ref{subsec:simul}:
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.85\textwidth]{images/plots/numerical_isolines.pdf}
+  \caption{\label{plot:numerical_potential_isolines} Linhas Equipotenciais da Solução Númerica}
+\end{figure}
+
+\clearpage
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.85\textwidth]{images/plots/numerical_potential_y.pdf}
+  \caption{\label{plot:numerical_potential_y} Comportamento da Variável $ y $ na Solução Númerica}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.85\textwidth]{images/plots/numerical_potential_z.pdf}
+  \caption{\label{plot:numerical_potential_z} Comportamento da Variável $ z $ na Solução Númerica}
+\end{figure}
+
+Observa-se que, mesmo com alguns erros de truncamento, a solução aproxima bem o que era esperado. O comportamento da variável $ z $ extrapola um
+pouco o limite de $ V_0 $ devido também aos erros de truncamento dos termos da solução analítica, porém mantem bem a forma exponencial experada
+para essa variável.
+
+\clearpage
 \subsection{Simulação em \textit{Software}}
+\label{subsec:simul}
 
 Para realizar a simulação, estabeleceu-se os mesmo parâmetros utilizados na subseção anterior. Ou seja, os seguintes valores:
 
@@ -521,23 +589,23 @@ Para realizar a simulação, estabeleceu-se os mesmo parâmetros utilizados na s
 \end{itemize}
 
 Além disso, para ser possível obter-se resultados na versão gratuita do simulador, colocou-se um pequeno espaçamento $ \varepsilon = 0,1\text{mm} $ entre cada face do cubo.
-Para conseguir bons resultados, utilizou-se o tipo de \textit{mesh} hexaédrico, com acurácia $ \text{acc} = 10^{-9} $.
+Para conseguir bons resultados, utilizou-se o tipo de \textit{mesh} hexaédrica, com acurácia $ \text{acc} = 10^{-9} $.
 
 Com esses parâmetros, gerou-se os seguintes gráficos no simulador \href{https://www.3ds.com/edu/education/students/solutions/cst-le}{CST Studio Suite 2024 - Learning Edition}:
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.5\textwidth]{images/plots/simulation_heatmap.png}
-  \caption{\label{plot:simul_potential_heatmap} Mapa de Calor do Potencial}
+  \includegraphics[width=0.55\textwidth]{images/plots/simulation_heatmap.png}
+  \caption{\label{plot:simul_potential_heatmap} Mapa de Calor do Potencial na Simulação}
 \end{figure}
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.5\textwidth]{images/plots/simulation_isolines.png}
-  \caption{\label{plot:simul_potential_isolines} Linhas Equipotenciais}
+  \includegraphics[width=0.55\textwidth]{images/plots/simulation_isolines.png}
+  \caption{\label{plot:simul_potential_isolines} Linhas Equipotenciais na Simulação}
 \end{figure}
 
-Apesar dos efeitos de borda, gerou-se resultados que representam funções contínuas. Comparando com os gráficos gerados pelo
+Apesar dos efeitos de borda, gerou-se resultados que representam funções contínuas. Comparando com o gráfico \ref{plot:numerical_potential_isolines} gerado pelo
 cálculo númerico da solução análitica, observa-se grande semelhança entre as conclusões obtidas pelas duas abordagens.
 
 Para analisar o efeito nas variáveis individualmente, gerou-se gráficos unidimensionais ao fixar as duas outras variáveis no centro
@@ -546,23 +614,25 @@ do cubo:
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.85\textwidth]{images/plots/simulation_potential_x.png}
-  \caption{\label{plot:simul_potential_x} Comportamento da Variável $ x $}
+  \caption{\label{plot:simul_potential_x} Comportamento da Variável $ x $ na Simulação}
 \end{figure}
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.85\textwidth]{images/plots/simulation_potential_y.png}
-  \caption{\label{plot:simul_potential_y} Comportamento da Variável $ y $}
+  \caption{\label{plot:simul_potential_y} Comportamento da Variável $ y $ na Simulação}
 \end{figure}
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.85\textwidth]{images/plots/simulation_potential_z.png}
-  \caption{\label{plot:simul_potential_z} Comportamento da Variável $ z $}
+  \caption{\label{plot:simul_potential_z} Comportamento da Variável $ z $ na Simulação}
 \end{figure}
 
 Esses últimos \textit{plots} confirmam as hipóteses iniciais da solução analítica. Essas imagens mostram que,
 de fato, as variáveis $ x $ e $ y $ apresentam o mesmo comportamento periódico e senoidal e que a variável $ z $
-apresenta crescimento exponencial.
+apresenta crescimento exponencial. Ademais, os gráficos \ref{plot:numerical_potential_y} e \ref{plot:numerical_potential_z}
+da solução numérica apresentam os mesmos comportamentos, com quase os mesmos valores de $ V(y) $ e $ V(z) $ nos respectivos gráficos. Isso confirma por fim que
+a solução analítica foi corretamente construída.
 
 \end{document}
