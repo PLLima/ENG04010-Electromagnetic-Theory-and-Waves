@@ -215,9 +215,9 @@ Dadas essas EDOs, para alguma das variáveis, pode-se obter as seguintes soluç�
     \label{eq:laplace_solutions_degenerates}
     S(s) &= A_0s + B_0,\, K_s^2 = 0 \\
     \label{eq:laplace_solutions_real}
-    S(s) &= A_1\sin(K_ss) + B_1\cos(K_ss),\, K_s^2 > 0,\, K_s \in \mathbb{R} \\
+    S(s) &= A_1\sin(|K_s|s) + B_1\cos(|K_s|s),\, K_s^2 > 0,\, K_s \in \mathbb{R} \\
     \label{eq:laplace_solutions_imaginary}
-    S(s) &= A_2\sinh(K_ss) + B_2\cosh(K_ss),\, K_s^2 < 0,\, K_s \in \mathbb{I}
+    S(s) &= A_2\sinh(|K_s|s) + B_2\cosh(|K_s|s),\, K_s^2 < 0,\, K_s \in \mathbb{I}
   \end{align}
 \end{center}
 
@@ -227,7 +227,7 @@ forma da solução geral depende das Condições de Fronteira.
 Alguns PVCs em Eletrostática apresentam dependência em apenas algumas variáveis. No entanto,
 mesmo que este tenha alguma simetria em relação à $ x $ e $ y $ (fixando um certo $ x $ ou $ y $,
 e fazendo $ z $ variar em função da variável restante deve resultar no mesmo comportamento de $ V(y,z) $
-ou $ V(x,z) $), de forma geral, precisar-se-á resolver o problema para todas as variáveis separadamente.
+ou $ V(x,z) $ respectivamente), de forma geral, precisar-se-á resolver o problema para todas as variáveis separadamente.
 
 \subsection{Determinando o Comportamento das Soluções}
 
@@ -287,9 +287,9 @@ Ou seja, com as condições que envolvem zerar as soluções gerais:
 $$ \Rightarrow V(0, y, z) = [A \cdot 0 + B \cdot 1][C\sin(|K_y|y) + D\cos(|K_y|y)][E\sinh(|K_z|z) + F\cosh(|K_z|z)] = 0 $$
 $$ \Rightarrow B[C\sin(|K_y|y) + D\cos(|K_y|y)][E\sinh(|K_z|z) + F\cosh(|K_z|z)] = 0 $$
 
-Para uma multiplicação ser nula, precisa-se algum dos termos multiplicados seja nulo. Como sabe-se que
-exponenciais nunca são nulas, para essa parcela ser nula, precisar-se-ia que tanto $ E = 0 $, quanto $ F = 0 $.
-No entanto, isso resulta na solução trivial para a variável $ z $, algo já constatado como falso. Logo, alguma
+Para uma multiplicação ser nula, precisa-se que algum dos termos multiplicados seja nulo. Como sabe-se que
+as funções hiperbólicas não são sempre nulas, para essa parcela ser nula, precisar-se-ia que tanto $ E = 0 $, quanto $ F = 0 $.
+No entanto, isso resultaria na solução trivial para a variável $ z $, algo já constatado como falso. Logo, alguma
 das outras parcelas ou ambas deve ser nula:
 $$ \Rightarrow B[C\sin(|K_y|y) + D\cos(|K_y|y)] = 0 $$
 
@@ -331,7 +331,7 @@ Assim, para facilitar, chamar-se-á $ A' := A\cdot C\cdot E $, ou seja:
 \end{itemize}
 $$ \Rightarrow V(a, y, z) = A'\sinh(|K_z|z)\sin(|K_x|a)\sin(|K_y|y) = 0 $$
 
-Como a contante $ A' $ não pode ser nula e as funções seno e seno hiperbólico são não nulas para diversos valores de $ y $ e $ z $, resta que:
+Como a constante $ A' $ não pode ser nula e as funções seno e seno hiperbólico são não nulas para diversos valores de $ y $ e $ z $, resta que:
 $$ \Rightarrow \sin(|K_x|a) = 0 $$
 
 A função seno é periódica e apresenta valor zero quando o seu argumento vale $ i\pi $, onde $ i \in \mathbb{Z} $:
@@ -352,7 +352,7 @@ Agora, tomando a última equação de \ref{eq:laplace_edos}:
 $$ K_x^2 + K_y^2 + K_z^2 = 0 $$
 $$ \Rightarrow -K_z^2 = K_x^2 + K_y^2 $$
 
-Como $ K_z^2 < 0 $, $ K_y^2 > 0 $ e $ K_x^2 > 0 $ e não há superposição entre essas variáveis (são vetores normais),
+Como $ K_z^2 < 0 $, $ K_y^2 > 0 $ e $ K_x^2 > 0 $ e não há superposição entre essas variáveis (são vetores ortogonais),
 $$ \Rightarrow |K_z|^2 = |K_x|^2 + |K_y|^2 $$
 $$ \Rightarrow |K_z| = \sqrt{|K_x|^2 + |K_y|^2} $$
 
@@ -424,7 +424,7 @@ $ x $, quanto em $ y $, formando uma espécie tabuleiro de xadrez com largura de
 Com essa suposição, já que o potencial fora do cubo não é importante para o problema, pode-se
 aplicar a teoria das Séries de Fourrier para achar uma solução que satisfaça às condições acima.
 
-Como há uma infinidade de múltiplos de $ i $ e $ j $ que fazem as contantes $ C_{ij} $, $ |K_x| $ e $ |K_y| $ satisfazerem as
+Como há uma infinidade de múltiplos de $ i $ e $ j $ que fazem as contantes $ C_{ij} $, $ |K_x| $ e $ |K_y| $ satisfazerem às
 Condições de Contorno, sabe-se que, nessa última Condição de Contorno, precisa-se de uma resposta da forma:
 \begin{equation}
   \label{eq:last_condition}
@@ -457,7 +457,7 @@ $$ \textstyle \Rightarrow \frac{1}{4} \sum_{i=1}^{\infty} \sum_{j=1}^{\infty} C_
 Neste ponto, caso $ n \neq i $ ou (inclusivo) $ m \neq j $:
 $$ \scriptstyle \Rightarrow \frac{a^2}{4\pi^2} \sum_{i=1}^{\infty} \sum_{j=1}^{\infty} C_{ij} \left[\frac{1}{i - n}\sin\left(\frac{\pi x(i - n)}{a}\right) - \frac{1}{i + n}\sin\left(\frac{\pi x(i + n)}{a}\right)\right]_{0}^{a} \left[\frac{1}{j - m}\sin\left(\frac{\pi y(j - m)}{a}\right) - \frac{1}{j + m}\sin\left(\frac{\pi y(j + m)}{a}\right)\right]_{0}^{a} $$
 
-Avaliando a integral acima, quando $ x = 0 $ e $ y = 0 $, observa-se que a afirmação acima é nula. Caso $ x = a $ e $ y = a $, o argumento dos senos será um múltiplo inteiro qualquer de $ \pi $, zerando novamente toda a afirmação. Com isso, concluí-se que:
+Avaliando a integral acima, quando $ x = 0 $ ou $ y = 0 $, observa-se que a afirmação acima é nula. Caso $ x = a $ ou $ y = a $, o argumento dos senos será um múltiplo inteiro qualquer de $ \pi $, zerando novamente toda a afirmação. Com isso, concluí-se que:
 $$ n \neq i \lor m \neq j \rightarrow \text{ a afirmação esquerda é nula.} $$
 
 Agora, caso $ n = i $ e $ m = j $:
@@ -514,7 +514,7 @@ Onde, na expressão acima, $ i = 1, 3, 5, \ldots, 2l - 1, \ldots $ e $ j = 1, 3,
 \label{sec:numerical}
 \subsection{Comportamento Numérico da Solução}
 
-Para obter um gráfico de comparação com a simulação realizada na próxima subseção, utilizar-se-á os seguintes parâmetros na solução analítica:
+Para obter um gráfico de comparação com a simulação realizada na subseção \ref{subsec:simul}, utilizar-se-á os seguintes parâmetros na solução analítica:
 
 \begin{itemize}
   \item $ a = 3 \text{mm}$;
@@ -573,7 +573,7 @@ A partir desse código, gerou-se os seguintes gráficos que serão analisados co
 \end{figure}
 
 Observa-se que, mesmo com alguns erros de truncamento, a solução aproxima bem o que era esperado. O comportamento da variável $ z $ extrapola um
-pouco o limite de $ V_0 $ devido também aos erros de truncamento dos termos da solução analítica, porém mantem bem a forma exponencial experada
+pouco o limite de $ V_0 $ devido também aos erros de truncamento dos termos da solução analítica, porém mantem bem a forma exponencial esperada
 para essa variável.
 
 \clearpage
@@ -632,7 +632,11 @@ do cubo:
 Esses últimos \textit{plots} confirmam as hipóteses iniciais da solução analítica. Essas imagens mostram que,
 de fato, as variáveis $ x $ e $ y $ apresentam o mesmo comportamento periódico e senoidal e que a variável $ z $
 apresenta crescimento exponencial. Ademais, os gráficos \ref{plot:numerical_potential_y} e \ref{plot:numerical_potential_z}
-da solução numérica apresentam os mesmos comportamentos, com quase os mesmos valores de $ V(y) $ e $ V(z) $ nos respectivos gráficos. Isso confirma por fim que
+da solução numérica apresentam os mesmos comportamentos, com quase os mesmos valores de $ V(y) $ e $ V(z) $ nos respectivos gráficos. Isso confirma, por fim, que
 a solução analítica foi corretamente construída.
+
+\begin{center}
+  \[ \scalebox{3}{$ * $} \]
+\end{center}
 
 \end{document}
